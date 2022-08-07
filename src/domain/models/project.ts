@@ -6,6 +6,7 @@ export type Project = {
     start: Date | null,
     end: Date | null,
     type: ProjectType
+    status: ProjectStatus
 }
 
 enum ProjectType {
