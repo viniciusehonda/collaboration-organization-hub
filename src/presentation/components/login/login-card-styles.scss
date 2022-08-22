@@ -1,0 +1,39 @@
+@import "../../styles/colors.scss";
+
+.loginCardContainer {
+    display: flex;
+    flex-direction: column;
+    width: 70vh;
+    height: 70vh;
+    background-color: $white;
+    padding: 50px;
+    border-radius: 8px;
+    align-self: center;
+    box-shadow: 2px 2px 2px $identityDark;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 40px;
+}
+
+.loginFormHidden {
+    display: none;
+}
+
+.loginInput {
+    margin-top: 10px !important;
+}
+
+.loginButton {
+    margin-top: 20px !important;
+}
+
+.loginProgress {
+    display: inline-block;
+    line-height: normal;
+    vertical-align: middle;
+    height: 100%;
+}

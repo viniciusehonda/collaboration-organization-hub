@@ -1,11 +1,10 @@
+@import "../../styles/colors.scss";
+
 .loginWrap {
     display: flex;
     flex-direction: column;
-    min-height: 98vh;
-    justify-content: space-between;
-
-}
-
-.form {
-    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    background: $identity;
+    background: linear-gradient(120deg, rgba(50,222,132,0.5) 0%, rgba(50,222,132,0.8) 50%);
 }

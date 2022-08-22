@@ -1,14 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import React from 'react'
+import { makeLogin  as Login } from '../factories/pages/login-factory'
 
 const Router: React.FC = () => {
 
   return (
       <BrowserRouter>
-      <h2>teste</h2>
         <Routes>
-          {/* <Route path="/login" exact component={makeLogin} />
-          <Route path="/signup" exact component={makeSignUp} />
+          <Route path="/login"  element={<Login />} />
+          {/* <Route path="/signup" exact component={makeSignUp} />
           <PrivateRoute path="/" exact component={makeSurveyList} />
           <PrivateRoute path="/surveys/:id" component={makeSurveyResult} /> */}
         </Routes>
