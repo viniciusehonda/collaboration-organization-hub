@@ -15,9 +15,7 @@ const Company: React.FC<Props> = ({ loadCompanyList }: Props) => {
     useEffect(() => {
         loadCompanyList
             .loadAll()
-            .then((data: model[]) => {
-                setCompanies(data);
-            })
+            .then(resultCompanies => setCompanies(old => ({...old, resultCompanies})));
     })
 
     return (<TableContainer>
