@@ -1,12 +1,18 @@
 @import "../../styles/colors.scss";
 
+.LoginTitle {
+    font-size: 30px;
+    color: $identityDark;
+    margin-bottom: 15px;
+}
+
 .loginCardContainer {
     display: flex;
     flex-direction: column;
-    width: 70vh;
-    height: 70vh;
+    width: calc(60vh);
+    height: 65vh;
     background-color: $white;
-    padding: 50px;
+    padding: 40px;
     border-radius: 8px;
     align-self: center;
     box-shadow: 2px 2px 2px $identityDark;
@@ -19,10 +25,6 @@
     padding: 40px;
 }
 
-.loginFormHidden {
-    display: none;
-}
-
 .loginInput {
     margin-top: 10px !important;
 }
@@ -32,8 +34,24 @@
 }
 
 .loginProgress {
-    display: inline-block;
-    line-height: normal;
-    vertical-align: middle;
-    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.loginSignUpContainer {
+    display: flex;
+    flex-direction: column;
+    width: calc(60vh);
+    padding: 10px 80px 80px 80px;
+    border-radius: 8px;
+    align-self: center;
+    justify-content: center;
+}
+
+.loginSignUpQuestion {
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: $identityDark;
 }

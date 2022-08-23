@@ -1,0 +1,13 @@
+@import "../../styles/colors.scss";
+
+.appTitleContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.appTitle {
+    color: $identityDarker;
+    font-size: 25px;
+    align-self: center;
+    padding: 10px;
+}

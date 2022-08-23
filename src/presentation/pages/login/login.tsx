@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import LoginCard from '@/presentation/components/login/loginCard'
+import AppTitle from '@/presentation/components/appTitle/appTitle'
 
 type Props = {
     validation: Validation,
@@ -20,6 +21,7 @@ const Login: React.FC<Props> = ({validation, authentication}: Props) => {
 
     return (
         <div className={Styles.loginWrap}>
+            <AppTitle />
             <LoginCard />
         </div>
     )

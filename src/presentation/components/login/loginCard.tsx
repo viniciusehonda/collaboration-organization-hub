@@ -4,7 +4,8 @@ import LoginIcon from '@mui/icons-material/Login';
 
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { Button, CircularProgress, LinearProgress, TextField } from '@mui/material'
+import { Box, Button, CircularProgress, Divider, LinearProgress, TextField } from '@mui/material'
+import ThemedTextField from '../inputs/ThemedTextField';
 
 type Props = {
 
@@ -16,23 +17,36 @@ const LoginCard: React.FC<Props> = (props: Props) => {
 
     return (
         <div className={Styles.loginCardContainer}>
-            <form className={!loginInputState ? Styles.loginForm : Styles.loginFormHidden}>
-                <TextField className={Styles.loginInput} required label={'e-mail'} variant={'outlined'}></TextField>
-                <TextField className={Styles.loginInput} required label={'senha'} variant={'outlined'} type={'password'}></TextField>
+            <form className={Styles.loginForm}>
+                <h2 className={Styles.LoginTitle}>Login</h2>
+                <ThemedTextField className={Styles.loginInput} required color={'success'} label={'e-mail'} disabled={loginInputState} variant={'outlined'} />
+                <ThemedTextField className={Styles.loginInput} required color={'success'} label={'senha'} disabled={loginInputState} variant={'outlined'} type={'password'}></ThemedTextField>
 
-                <Button className={Styles.loginButton} variant={'outlined'} endIcon={<LoginIcon />} onClick={() => setLoginInputState(!loginInputState)}>
+                <Button className={Styles.loginButton} variant={'contained'} color={'success'} disabled={loginInputState} endIcon={<LoginIcon />} onClick={() => setLoginInputState(!loginInputState)}>
                     Login
                 </Button>
+
+
             </form>
 
             {
                 loginInputState ?
                     <div className={Styles.loginProgress}>
-                        <LinearProgress />
+                        <CircularProgress color="success" />
                     </div>
                     :
                     <></>
             }
+
+            <div className={Styles.loginSignUpContainer}>
+                <Divider />
+                <p className={Styles.loginSignUpQuestion}>
+                    Don't have an account ?
+                </p>
+                <Button className={Styles.loginButton} variant={'outlined'} color={'success'} disabled={loginInputState}>
+                    Sign up
+                </Button>
+            </div>
         </div>
     )
 }
