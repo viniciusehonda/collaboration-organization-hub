@@ -9,13 +9,22 @@
 .loginCardContainer {
     display: flex;
     flex-direction: column;
-    width: calc(60vh);
-    height: 65vh;
+    width: 35vw;
+    height: 60vh;
     background-color: $white;
-    padding: 40px;
-    border-radius: 8px;
+    opacity: 0.9;
+    padding: 25px;
+    border-radius: 15px;
     align-self: center;
     box-shadow: 2px 2px 2px $identityDark;
+}
+
+@media screen and (max-width: 600px) {
+    .loginCardContainer {
+        width: 98vw;
+        height: 70vh;
+        padding: 10px;
+    }
 }
 
 .loginForm {
@@ -41,11 +50,8 @@
 .loginSignUpContainer {
     display: flex;
     flex-direction: column;
-    width: calc(60vh);
-    padding: 10px 80px 80px 80px;
-    border-radius: 8px;
-    align-self: center;
-    justify-content: center;
+    flex-wrap: wrap;
+    padding: 10px 40px 10px 40px;
 }
 
 .loginSignUpQuestion {

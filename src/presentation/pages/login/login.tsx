@@ -13,6 +13,9 @@ type Props = {
     authentication: Authentication
 }
 
+const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    event.preventDefault();
+}
 
 const Login: React.FC<Props> = ({validation, authentication}: Props) => {
 
@@ -22,7 +25,7 @@ const Login: React.FC<Props> = ({validation, authentication}: Props) => {
     return (
         <div className={Styles.loginWrap}>
             <AppTitle />
-            <LoginCard />
+            <LoginCard  handleSubmit={handleSubmit}/>
         </div>
     )
 }

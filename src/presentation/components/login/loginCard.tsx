@@ -8,7 +8,7 @@ import { Box, Button, CircularProgress, Divider, LinearProgress, TextField } fro
 import ThemedTextField from '../inputs/ThemedTextField';
 
 type Props = {
-
+    handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>
 }
 
 const LoginCard: React.FC<Props> = (props: Props) => {
@@ -17,7 +17,7 @@ const LoginCard: React.FC<Props> = (props: Props) => {
 
     return (
         <div className={Styles.loginCardContainer}>
-            <form className={Styles.loginForm}>
+            <form className={Styles.loginForm} onSubmit={props.handleSubmit}>
                 <h2 className={Styles.LoginTitle}>Login</h2>
                 <ThemedTextField className={Styles.loginInput} required color={'success'} label={'e-mail'} disabled={loginInputState} variant={'outlined'} />
                 <ThemedTextField className={Styles.loginInput} required color={'success'} label={'senha'} disabled={loginInputState} variant={'outlined'} type={'password'}></ThemedTextField>
@@ -37,7 +37,6 @@ const LoginCard: React.FC<Props> = (props: Props) => {
                     :
                     <></>
             }
-
             <div className={Styles.loginSignUpContainer}>
                 <Divider />
                 <p className={Styles.loginSignUpQuestion}>
