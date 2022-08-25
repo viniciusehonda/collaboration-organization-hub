@@ -1,6 +1,6 @@
 export type Account = {
-    _id: number,
-    accessToken: string,
+    userId: number,
+    token: string,
     firstName: string,
     lastName: string
 }

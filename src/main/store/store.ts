@@ -1,12 +1,16 @@
+import { Account } from "@/domain/models/account";
+import { LocalStorageAdapter } from "@/infra/cache/localStorageAdapter";
 import { configureStore } from "@reduxjs/toolkit"
 
 
 export interface RootState {
-    isLoggedIn: boolean
+    isLoggedIn: boolean,
+    account: Account | null
 }
 
 const initialRootState: RootState = {
-    isLoggedIn: false
+    isLoggedIn: false,
+    account: null
 }
 
 const rootReducer = (state: RootState = initialRootState, action: any): RootState => {
@@ -15,16 +19,27 @@ const rootReducer = (state: RootState = initialRootState, action: any): RootStat
 
     switch (type) {
         case 'LOGIN_SUCCESS':
-            console.log("login_sucess");
-            console.log(state);
-            return {
-                ...state,
-                isLoggedIn: true
-            };
+
+            var newAccount = payload.account as Account;
+
+            if (newAccount)
+            {
+                var localStorage = new LocalStorageAdapter();
+                localStorage.set("_authData", newAccount)
+
+                return {
+                    ...state,
+                    isLoggedIn: true,
+                    account: newAccount
+                };
+            }
+
+            return state;
         case 'LOGOUT':
             return {
                 ...state,
-                isLoggedIn: false
+                isLoggedIn: false,
+                account: null
             };
         default:
             return state;

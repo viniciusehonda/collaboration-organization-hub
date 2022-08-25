@@ -45,12 +45,15 @@ const Login: React.FC<Props> = ({validation, authentication}: Props) => {
                 dispatch({
                     type: 'LOGIN_SUCCESS',
                     payload: {
-    
+                        account: account
                     }
                 })
             })
             .catch((error) => {
-
+                console.log("error", error);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
 
         } catch (error) {

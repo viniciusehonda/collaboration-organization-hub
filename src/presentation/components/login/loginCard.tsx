@@ -22,8 +22,8 @@ const LoginCard: React.FC<Props> = (props: Props) => {
         <div className={Styles.loginCardContainer}>
             <form className={Styles.loginForm} onSubmit={(element) => props.handleSubmit(element, email, password)}>
                 <h2 className={Styles.LoginTitle}>Login</h2>
-                <ThemedTextField className={Styles.loginInput} required color={'success'} label={'e-mail'} disabled={loginInputState} variant={'outlined'} />
-                <ThemedTextField className={Styles.loginInput} required color={'success'} label={'senha'} disabled={loginInputState} variant={'outlined'} type={'password'}></ThemedTextField>
+                <ThemedTextField className={Styles.loginInput} required onChange={(e) => setEmail(e.target.value)} color={'success'} label={'e-mail'} disabled={loginInputState} variant={'outlined'} />
+                <ThemedTextField className={Styles.loginInput} required onChange={(e) => setPassword(e.target.value)}  color={'success'} label={'password'} disabled={loginInputState} variant={'outlined'} type={'password'}></ThemedTextField>
 
                 <Button type="submit" className={Styles.loginButton} variant={'contained'} color={'success'} disabled={loginInputState} endIcon={<LoginIcon />} >
                     Login
