@@ -8,29 +8,31 @@ import { Box, Button, CircularProgress, Divider, LinearProgress, TextField } fro
 import ThemedTextField from '../inputs/ThemedTextField';
 
 type Props = {
-    handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>
+    handleSubmit: (event: React.FormEvent<HTMLFormElement>, email: string, password: string) => Promise<void>,
+    isLoading: boolean
 }
 
 const LoginCard: React.FC<Props> = (props: Props) => {
 
     const [loginInputState, setLoginInputState] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     return (
         <div className={Styles.loginCardContainer}>
-            <form className={Styles.loginForm} onSubmit={props.handleSubmit}>
+            <form className={Styles.loginForm} onSubmit={(element) => props.handleSubmit(element, email, password)}>
                 <h2 className={Styles.LoginTitle}>Login</h2>
                 <ThemedTextField className={Styles.loginInput} required color={'success'} label={'e-mail'} disabled={loginInputState} variant={'outlined'} />
                 <ThemedTextField className={Styles.loginInput} required color={'success'} label={'senha'} disabled={loginInputState} variant={'outlined'} type={'password'}></ThemedTextField>
 
-                <Button className={Styles.loginButton} variant={'contained'} color={'success'} disabled={loginInputState} endIcon={<LoginIcon />} onClick={() => setLoginInputState(!loginInputState)}>
+                <Button type="submit" className={Styles.loginButton} variant={'contained'} color={'success'} disabled={loginInputState} endIcon={<LoginIcon />} >
                     Login
                 </Button>
-
 
             </form>
 
             {
-                loginInputState ?
+                props.isLoading ?
                     <div className={Styles.loginProgress}>
                         <CircularProgress color="success" />
                     </div>
