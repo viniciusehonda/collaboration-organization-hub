@@ -22,8 +22,7 @@ const rootReducer = (state: RootState = initialRootState, action: any): RootStat
 
             var newAccount = payload.account as Account;
 
-            if (newAccount)
-            {
+            if (newAccount) {
                 var localStorage = new LocalStorageAdapter();
                 localStorage.set("_authData", newAccount)
 
@@ -36,12 +35,26 @@ const rootReducer = (state: RootState = initialRootState, action: any): RootStat
 
             return state;
         case 'LOGOUT':
+
+            var localStorage = new LocalStorageAdapter();
+            localStorage.set("_authData", {});
+
             return {
                 ...state,
                 isLoggedIn: false,
                 account: null
             };
         default:
+            var localStorage = new LocalStorageAdapter();
+            let authData = localStorage.get("_authData");
+
+            if (authData != null) {
+                return {
+                    ...state,
+                    isLoggedIn: true,
+                    account: authData as Account
+                }
+            }
             return state;
     }
 }

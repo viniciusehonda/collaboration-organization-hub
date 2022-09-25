@@ -20,7 +20,7 @@ type Props = {
 
 const Login: React.FC<Props> = ({validation, authentication}: Props) => {
 
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
     const [loginState, setState] = useState(false);
@@ -48,6 +48,8 @@ const Login: React.FC<Props> = ({validation, authentication}: Props) => {
                         account: account
                     }
                 })
+
+                navigate('/');
             })
             .catch((error) => {
                 console.log("error", error);
