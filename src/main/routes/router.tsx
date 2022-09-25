@@ -9,15 +9,11 @@ const Router: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/"
-          element={<PrivateRoute>
-            <Route path="/" element={<Home />} />
-          </PrivateRoute>}>
+        <Route path="/" element={<PrivateRoute>
+          <Home />
+        </PrivateRoute>}>
         </Route>
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/signup" exact component={makeSignUp} />
-          <PrivateRoute path="/" exact component={makeSurveyList} />
-          <PrivateRoute path="/surveys/:id" component={makeSurveyResult} /> */}
       </Routes>
     </BrowserRouter>
   )

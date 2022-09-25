@@ -2,6 +2,8 @@ import React from 'react'
 
 export const makeHome: React.FC = () => {
   return (
-    <>You're home</>
+    <div>
+      <h2>You are Home</h2>
+    </div>
   )
 }
