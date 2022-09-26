@@ -1,0 +1,22 @@
+@import "../../styles/colors.scss";
+
+.validationTextContainer {
+    display: flex;
+    align-items: center;
+    color: $invalid;
+    margin-top: 5px;
+}
+
+.validationText {
+    font-weight: bold;
+    word-wrap: break-word;
+    text-align: justify;
+    padding: 2px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.validationIcon {
+    display: inline-block;
+    vertical-align: middle;
+}

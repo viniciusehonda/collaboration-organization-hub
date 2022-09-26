@@ -12,18 +12,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { RemoteAuthentication } from '@/data/usecases/remote-authentication'
 import { RootState } from '@/main/store/store'
 import { Account } from '@/domain/models/account'
+import { ValidationMessage } from '@/presentation/components/validationText/validationText'
 
 type Props = {
     validation: Validation,
     authentication: Authentication
 }
 
-const Login: React.FC<Props> = ({validation, authentication}: Props) => {
+type LoginFields = {
+    email?: string,
+    password?: string
+}
+
+const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
 
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
     const [loginState, setState] = useState(false);
+    const [validationState, setValidationState] = useState(new Array<ValidationMessage>());
 
     const isLoggedIn = useSelector((state: RootState) => {
         return state.isLoggedIn;
@@ -31,12 +38,51 @@ const Login: React.FC<Props> = ({validation, authentication}: Props) => {
 
     const dispatch = useDispatch();
 
+    function validate(field: string, input: LoginFields): ValidationMessage | null {
+
+        var error = validation.validate(field, input);
+
+        if (error == null || error.length == 0) {
+            return null
+        }
+
+        return {
+            field: field,
+            message: error
+        }
+    }
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>, email: string, password: string): Promise<void> => {
         event.preventDefault();
 
-        try{
+        try {
 
             setIsLoading(true);
+            setValidationState([]);
+
+            let loginFields: LoginFields = {
+                email: email,
+                password: password
+            };
+
+            let validationErrors = new Array<ValidationMessage>();
+            var emailValidation = validate('email', loginFields);
+
+            if (emailValidation) {
+                validationErrors.push(emailValidation);
+            }
+
+            var passwordValidation = validate('password', loginFields);
+
+            if (passwordValidation) {
+                validationErrors.push(passwordValidation);
+            }
+
+            if (validationErrors.length > 0) {
+                setValidationState(validationErrors);
+                setIsLoading(false);
+                return;
+            }
 
             authentication.auth({
                 email: email,
@@ -51,22 +97,26 @@ const Login: React.FC<Props> = ({validation, authentication}: Props) => {
 
                 navigate('/');
             })
-            .catch((error) => {
-                console.log("error", error);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
+                .catch((error) => {
+                    if (error && error.message) {
+                        setValidationState(state => [...state, { field: 'default', message: error.message } as ValidationMessage]);
+                    }
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
 
-        } catch (error) {
-
+        } catch (error: any) {
+            if (error && error.message) {
+                setValidationState(state => [...state, { field: 'default', message: error.message } as ValidationMessage]);
+            }
         }
     }
 
     return (
         <div className={Styles.loginWrap}>
             <AppTitle />
-            <LoginCard isLoading={isLoading} handleSubmit={handleSubmit}/>
+            <LoginCard isLoading={isLoading} handleSubmit={handleSubmit} validationErrors={validationState} />
         </div>
     )
 }
