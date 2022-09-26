@@ -8,6 +8,7 @@ import { Box, Button, CircularProgress, Divider, LinearProgress, TextField } fro
 import ThemedTextField from '../inputs/ThemedTextField';
 import { ValidationMessage } from '../validationText/validationText';
 import ValidationText from '../validationText/validationText'
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
     handleSubmit: (event: React.FormEvent<HTMLFormElement>, email: string, password: string) => Promise<void>,
@@ -17,6 +18,7 @@ type Props = {
 
 const LoginCard: React.FC<Props> = (props: Props) => {
 
+    const navigate = useNavigate();
     const [loginInputState, setLoginInputState] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -38,6 +40,10 @@ const LoginCard: React.FC<Props> = (props: Props) => {
         }
 
         return undefined;
+    }
+
+    const navigateToSignup = () => {
+        navigate('/signup')
     }
 
     return (
@@ -67,7 +73,7 @@ const LoginCard: React.FC<Props> = (props: Props) => {
                 <p className={Styles.loginSignUpQuestion}>
                     Don't have an account ?
                 </p>
-                <Button className={Styles.loginButton} variant={'outlined'} color={'success'} disabled={loginInputState}>
+                <Button className={Styles.loginButton} onClick={navigateToSignup} variant={'outlined'} color={'success'} disabled={loginInputState}>
                     Sign up
                 </Button>
             </div>

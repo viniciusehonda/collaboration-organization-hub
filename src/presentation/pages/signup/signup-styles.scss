@@ -1,0 +1,72 @@
+@import "../../styles/colors.scss";
+
+.signupWrap {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
+    background: $identity;
+    background: linear-gradient(120deg, rgba(50,222,132,0.6) 0%, rgba(50,222,132,0.9) 50%);
+}
+
+.signupTitle {
+    font-size: 30px;
+    color: $identityDark;
+    margin-bottom: 15px;
+}
+
+.signupCardContainer {
+    display: flex;
+    flex-direction: column;
+    width: 35vw;
+    height: 60vh;
+    background-color: $white;
+    opacity: 0.9;
+    padding: 25px;
+    border-radius: 15px;
+    align-self: center;
+    box-shadow: 2px 2px 2px $identityDark;
+}
+
+@media screen and (max-width: 600px) {
+    .signupCardContainer {
+        width: 98vw;
+        height: 70vh;
+        padding: 10px;
+    }
+}
+
+.signupForm {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.signupInput {
+    margin-top: 10px !important;
+}
+
+.signupButton {
+    margin-top: 20px !important;
+}
+
+.signupProgress {
+    display: flex;
+    justify-content: center;
+}
+
+.loginSignUpContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 10px 40px 10px 40px;
+}
+
+.loginSignUpQuestion {
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: $identityDark;
+}
