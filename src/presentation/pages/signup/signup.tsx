@@ -15,6 +15,7 @@ import ValidationText, { ValidationMessage } from '@/presentation/components/val
 import ThemedTextField from '@/presentation/components/inputs/ThemedTextField'
 import { Button, CircularProgress, Divider } from '@mui/material'
 import CheckIcon from '@mui/icons-material/Check';
+import { UserExistsError } from '@/domain/errors/authentication/user-exists-error'
 
 type Props = {
     validation: Validation,
@@ -26,7 +27,6 @@ const Signup: React.FC<Props> = ({ validation, registerAccount }: Props) => {
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
-    const [signupState, setSignupState] = useState(false);
     const [validationState, setValidationState] = useState(new Array<ValidationMessage>());
 
     const [firstName, setFirstName] = useState('');
@@ -52,14 +52,13 @@ const Signup: React.FC<Props> = ({ validation, registerAccount }: Props) => {
     }
 
     const backToLogin = () => {
-        navigate('/login');
+        navigate('/');
     }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>, fields: RegisterAccount.Params): Promise<void> => {
         event.preventDefault();
 
         try {
-
             setIsLoading(true);
             setValidationState([]);
 
@@ -70,8 +69,7 @@ const Signup: React.FC<Props> = ({ validation, registerAccount }: Props) => {
             fieldList.forEach((item) => {
                 let validationResult = validate(item, fields)
 
-                if (validationResult)
-                {
+                if (validationResult) {
                     validationErrors.push(validationResult);
                 }
             });
@@ -83,17 +81,22 @@ const Signup: React.FC<Props> = ({ validation, registerAccount }: Props) => {
             }
 
             registerAccount.add(fields)
-            .then((account: Account) => {
-                dispatch({
-                    type: 'LOGIN_SUCCESS',
-                    payload: {
-                        account: account
-                    }
-                })
+                .then((account: Account) => {
+                    dispatch({
+                        type: 'LOGIN_SUCCESS',
+                        payload: {
+                            account: account
+                        }
+                    })
 
-                navigate('/');
-            })
+                    navigate('/home');
+                })
                 .catch((error) => {
+                    if (error instanceof UserExistsError) {
+                        setValidationState(state => [...state, { field: 'email', message: error.message } as ValidationMessage]);
+                        return;
+                    }
+
                     if (error && error.message) {
                         setValidationState(state => [...state, { field: 'default', message: error.message } as ValidationMessage]);
                     }
@@ -111,8 +114,7 @@ const Signup: React.FC<Props> = ({ validation, registerAccount }: Props) => {
 
     const getValidationErrors = (fieldName: string, validationErrors: ValidationMessage[]) => {
 
-        if (validationErrors == null || validationErrors.length <= 0)
-        {
+        if (validationErrors == null || validationErrors.length <= 0) {
             return undefined;
         }
 
@@ -120,8 +122,7 @@ const Signup: React.FC<Props> = ({ validation, registerAccount }: Props) => {
             return item.field == fieldName;
         });
 
-        if (errors != null && errors.length > 0)
-        {
+        if (errors != null && errors.length > 0) {
             return errors[0];
         }
 
@@ -134,17 +135,17 @@ const Signup: React.FC<Props> = ({ validation, registerAccount }: Props) => {
             <div className={Styles.signupCardContainer}>
                 <form className={Styles.signupForm} onSubmit={(element) => handleSubmit(element, { firstName: firstName, lastName: lastName, email: email, password: password, passwordConfirmation: passwordConfirmation })}>
                     <h2 className={Styles.signupTitle}>SignUp</h2>
-                    <ThemedTextField className={Styles.signupInput} onChange={(e) => setFirstName(e.target.value)} color={'success'} label={'first name'} disabled={signupState} variant={'outlined'} />
+                    <ThemedTextField className={Styles.signupInput} onChange={(e) => setFirstName(e.target.value)} color={'success'} label={'first name'} disabled={isLoading} variant={'outlined'} />
                     <ValidationText validationMessage={getValidationErrors('firstName', validationState)}></ValidationText>
-                    <ThemedTextField className={Styles.signupInput} onChange={(e) => setLastName(e.target.value)} color={'success'} label={'last name'} disabled={signupState} variant={'outlined'} />
+                    <ThemedTextField className={Styles.signupInput} onChange={(e) => setLastName(e.target.value)} color={'success'} label={'last name'} disabled={isLoading} variant={'outlined'} />
                     <ValidationText validationMessage={getValidationErrors('lastName', validationState)}></ValidationText>
-                    <ThemedTextField className={Styles.signupInput} onChange={(e) => setEmail(e.target.value)} color={'success'} label={'e-mail'} disabled={signupState} variant={'outlined'} />
+                    <ThemedTextField className={Styles.signupInput} onChange={(e) => setEmail(e.target.value)} color={'success'} label={'e-mail'} disabled={isLoading} variant={'outlined'} />
                     <ValidationText validationMessage={getValidationErrors('email', validationState)}></ValidationText>
-                    <ThemedTextField className={Styles.signupInput} onChange={(e) => setPassword(e.target.value)} color={'success'} label={'password'} disabled={signupState} variant={'outlined'} type={'password'}></ThemedTextField>
+                    <ThemedTextField className={Styles.signupInput} onChange={(e) => setPassword(e.target.value)} color={'success'} label={'password'} disabled={isLoading} variant={'outlined'} type={'password'}></ThemedTextField>
                     <ValidationText validationMessage={getValidationErrors('password', validationState)}></ValidationText>
-                    <ThemedTextField className={Styles.signupInput} onChange={(e) => setPasswordConfirmation(e.target.value)} color={'success'} label={'password confirmation'} disabled={signupState} variant={'outlined'} type={'password'}></ThemedTextField>
+                    <ThemedTextField className={Styles.signupInput} onChange={(e) => setPasswordConfirmation(e.target.value)} color={'success'} label={'password confirmation'} disabled={isLoading} variant={'outlined'} type={'password'}></ThemedTextField>
                     <ValidationText validationMessage={getValidationErrors('passwordConfirmation', validationState)}></ValidationText>
-                    <Button type="submit" className={Styles.signupButton} variant={'contained'} color={'success'} disabled={signupState} endIcon={<CheckIcon />} >
+                    <Button type="submit" className={Styles.signupButton} variant={'contained'} color={'success'} disabled={isLoading} endIcon={<CheckIcon />} >
                         SignUp
                     </Button>
                     <ValidationText validationMessage={getValidationErrors('default', validationState)}></ValidationText>

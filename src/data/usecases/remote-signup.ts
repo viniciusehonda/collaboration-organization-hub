@@ -1,6 +1,7 @@
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http/httpClient'
 import { RegisterAccount } from '@/domain/usecases/authentication/registerAccount'
 import { InvalidCredentialsError, UnexpectedError } from '@/domain/errors/'
+import { UserExistsError } from '@/domain/errors/authentication/user-exists-error'
 
 export class RemoteSignup implements RegisterAccount {
   constructor (
@@ -14,9 +15,12 @@ export class RemoteSignup implements RegisterAccount {
       method: 'post',
       body: params
     })
+    debugger;
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok: return httpResponse.body!
+      case HttpStatusCode.created: return httpResponse.body!
       case HttpStatusCode.unauthorized: throw new InvalidCredentialsError()
+      case HttpStatusCode.conflict: throw new UserExistsError()
       default: throw new UnexpectedError()
     }
   }
