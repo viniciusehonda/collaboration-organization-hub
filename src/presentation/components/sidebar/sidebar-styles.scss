@@ -1,0 +1,80 @@
+@import "../../styles/colors.scss";
+
+.sidebarWrap {
+    background-color: $identityDarker;
+    height: 80px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    z-index: 999;
+}
+
+.menuBar {
+    margin-left: 2rem;
+    font-size: 2rem;
+    background: none;
+    color: $white;
+}
+
+.navMenu {
+    background-color: $identityDarker;
+    width: 250px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    transition: 850ms;
+}
+
+.navMenu.active {
+    left: 0;
+    transition: 350ms;
+}
+
+.navText {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 8px 0 8px 16px;
+    list-style: none;
+    height: 60px;
+}
+
+.navTextLink {
+    justify-content: start;
+    list-style: none;
+    height: 60px;
+    text-decoration: none;
+    color: $white;
+    font-size: 18px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    // border-radius: 4px;
+}
+
+.navTextLink:hover {
+    background-color: $valid;
+    height: 65px;
+}
+
+.navMenuItems {
+    width: 100%;
+    padding: 0;
+}
+
+.navbarToggle {
+    background-color: $identityDarker;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.menuItemText {
+    margin-left: 16px;
+}

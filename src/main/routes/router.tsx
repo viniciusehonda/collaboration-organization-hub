@@ -3,12 +3,14 @@ import React from 'react'
 import { makeLogin as Login } from '../factories/pages/login-factory'
 import { makeSignup as Signup } from '../factories/pages/signup-factory'
 import { makeHome as Home } from '../factories/pages/home-factory'
+import { makeSidebar as Sidebar } from '@/main/factories/pages/sidebar-factory'
 import PrivateRoute from '../proxies/privateRoute'
 
 const Router: React.FC = () => {
 
   return (
     <BrowserRouter>
+      <Sidebar />
       <Routes>
         <Route path="/" element={<PrivateRoute>
           <Home />
