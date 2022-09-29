@@ -48,7 +48,7 @@ const rootReducer = (state: RootState = initialRootState, action: any): RootStat
             var localStorage = new LocalStorageAdapter();
             let authData = localStorage.get("_authData");
 
-            if (authData != null) {
+            if (authData != null && Object.keys(authData).length > 0) {
                 return {
                     ...state,
                     isLoggedIn: true,
