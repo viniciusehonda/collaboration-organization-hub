@@ -59,7 +59,7 @@
 }
 
 .navTextLink:hover {
-    background-color: $valid;
+    background-color: $hover;
     height: 65px;
 }
 
@@ -97,18 +97,7 @@
     border: transparent;
 }
 
-.userBar {
-    float: right;
-    order: 2;
-    margin-left: auto;
-    margin-right: 15px;
-    height: 100%;
-    align-items: center;
-    display: flex;
-    padding: 5px;
-}
-
-.userInfo {
-    color: $white;
-    margin-left: 10px;
+.toggleButton:hover{
+    background-color: $hoverLight;
+    cursor: pointer;
 }

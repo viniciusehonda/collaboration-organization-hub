@@ -7,6 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from 'react';
 import { BurgerSwipe } from './burgerSwipe';
+import { SidebarUser } from './sidebarUser';
 
 export type SidebarItem = {
   name: string,
@@ -37,10 +38,7 @@ const Sidebar: React.FC<Props> = (props: Props) => {
             <BurgerSwipe isClosed={sidebar}></BurgerSwipe>
           </button>
       </div>
-      <div className={Styles.userBar}>
-        {/* <Divider orientation="vertical" flexItem /> */}
-        <p className={Styles.userInfo}>usuário</p>
-      </div>
+      <SidebarUser />
     </div>
     <nav className={sidebar ? `${Styles.navMenu} ${Styles.active}` : Styles.navMenu}>
       <ul className={Styles.navMenuItems} onClick={showSidebar}>

@@ -14,16 +14,16 @@ const Router: React.FC = () => {
     <MainLayout>
       <BrowserRouter>
         <Sidebar />
-        <MainPage	>
-          <Routes>
-            <Route path="/" element={<PrivateRoute>
+        <Routes>
+          <Route path="/" element={<PrivateRoute>
+            <MainPage>
               <Home />
-            </PrivateRoute>}>
-            </Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Routes>
-        </MainPage>
+            </MainPage>
+          </PrivateRoute>}>
+          </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
       </BrowserRouter>
     </MainLayout>
   )

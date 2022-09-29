@@ -1,0 +1,92 @@
+@import "../../styles/colors.scss";
+
+.userBar {
+    float: right;
+    order: 2;
+    margin-left: auto;
+    margin-right: 15px;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    padding: 5px;
+}
+
+.userInfo {
+    color: $white;
+    margin-left: 10px;
+}
+
+.userInfoOptions {
+    color: $white;
+    margin-left: 10px;
+    font-size: 18px;
+}
+
+.userAvatar {
+    cursor: pointer;
+}
+
+.userAvatar:hover {
+    box-shadow: 0 0px 0 4px $hoverLight;
+}
+
+.userAvatar.active {
+    box-shadow: 0 0px 0 4px $hover;
+}
+
+.userOptions {
+    background-color: $identityDark;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    transition: 850ms;
+    z-index: 1;
+    margin-top: 75px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.userOptions.active {
+    right: 4px;
+    transition: 350ms;
+}
+
+.userInfoComplete {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.userActions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.logoutButton {
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid $white;
+    color: $white;
+    height: 35px;
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding: 5px;
+    margin: 0 auto;
+}
+
+.logoutButton:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+    background-color: $identityDarkOpacity;
+}
