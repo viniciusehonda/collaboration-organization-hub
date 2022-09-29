@@ -1,6 +1,7 @@
 @import "../../styles/colors.scss";
 
 .sidebarWrap {
+    flex: 0 1 auto;
     background-color: $identityDarker;
     height: 80px;
     display: flex;
@@ -26,6 +27,8 @@
     top: 0;
     left: -100%;
     transition: 850ms;
+    z-index: 1;
+    margin-top: 75px;
 }
 
 .navMenu.active {
@@ -53,7 +56,6 @@
     display: flex;
     align-items: center;
     padding: 0 16px;
-    // border-radius: 4px;
 }
 
 .navTextLink:hover {
@@ -77,4 +79,36 @@
 
 .menuItemText {
     margin-left: 16px;
+}
+
+.toggleButtonWrap {
+    width: 80px;
+    float: left;
+    z-index: 999;
+}
+
+.toggleButton {
+    width: 56px;
+    height: 56px;
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    background-color: transparent;
+    border: transparent;
+}
+
+.userBar {
+    float: right;
+    order: 2;
+    margin-left: auto;
+    margin-right: 15px;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    padding: 5px;
+}
+
+.userInfo {
+    color: $white;
+    margin-left: 10px;
 }

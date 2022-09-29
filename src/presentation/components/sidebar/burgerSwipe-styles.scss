@@ -1,0 +1,43 @@
+@import "../../styles/colors.scss";
+
+.burger {
+    position: relative;
+    width: 30px;
+}
+
+.burger, .burger::before, .burger::after {
+    display: block;
+    border-radius: 2px;
+    height: 2px;
+    background-color: $white;
+    transition: 0.3s;
+}
+
+.burger::before, .burger::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+}
+
+.burger::before {  top: -8px; }
+
+.burger::after { top: 8px; }
+
+.burgerSwipe,
+.burgerSwipe.isClosed::before,
+.burgerSwipe::after {
+    transition: 0.2s ease-in-out;
+}
+
+.burgerSwipe.isClosed {
+    transform: translateX(-50px);
+}
+
+.burgerSwipe.isClosed::before {
+    transform: rotate(-45deg) translate(30px, 40px);
+}
+
+.burgerSwipe.isClosed::after {
+    transform: rotate(45deg) translate(30px, -42px);
+}

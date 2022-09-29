@@ -1,0 +1,8 @@
+@import "../../styles/colors.scss";
+
+.mainContainer {
+    background-color: $identityDarker;
+    display: flex;
+    flex-flow: column;
+    height: 100vh;
+}
