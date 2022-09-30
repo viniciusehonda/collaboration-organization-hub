@@ -15,7 +15,6 @@ export class RemoteSignup implements RegisterAccount {
       method: 'post',
       body: params
     })
-    debugger;
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok: return httpResponse.body!
       case HttpStatusCode.created: return httpResponse.body!
