@@ -19,12 +19,11 @@ export class RemoteGetCustomer implements GetCustomer {
 
     async get(id: string): Promise<RemoteGetCustomer.Model> {
         const httpResponse = await this.httpClient.request({
-            url: this.url,
+            url: this.url + '/' + id,
             headers: {
                 'x-access-token': this.getToken()
             },
-            method: 'get',
-            body: id
+            method: 'get'
         })
         switch (httpResponse.statusCode) {
             case HttpStatusCode.ok: return httpResponse.body!

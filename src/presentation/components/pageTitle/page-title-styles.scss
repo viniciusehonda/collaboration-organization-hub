@@ -1,0 +1,28 @@
+@import "../../styles/colors.scss";
+
+.pageTitleContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.pageTitle {
+    color: $identityDarker;
+    font-size: 25px;
+    align-self: flex-start;
+    padding: 10px;
+    overflow-wrap: break-word;
+}
+
+.separator {
+    display: block;
+    height: 1px;
+    border: 0; border-top: 1px solid $identityDarker;
+    margin: 1em 0; padding: 0;
+}
+
+@media screen and (max-width: 600px) {
+    .pageTitle {
+        font-size: 23px;
+        padding: 0px 2px 5px 2px;
+    }
+}

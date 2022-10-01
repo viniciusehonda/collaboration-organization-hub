@@ -1,0 +1,32 @@
+@import "../../styles/colors.scss";
+
+.pageWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.optionsWrap {
+    display: flex;
+    position: fixed;
+    bottom: 16px;
+    right: 32px;
+}
+
+.table {
+    height: 100%;
+}
+
+.addButton {
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid $white;
+    color: $white;
+    height: 35px;
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding: 5px;
+    margin: 0 auto;
+}
