@@ -19,12 +19,11 @@ export class RemoteDeleteCustomer implements DeleteCustomer {
 
     async delete(id: string): Promise<RemoteDeleteCustomer.Model> {
         const httpResponse = await this.httpClient.request({
-            url: this.url,
+            url: this.url + '/' + id,
             headers: {
                 'x-access-token': this.getToken()
             },
-            method: 'delete',
-            body: id
+            method: 'delete'
         })
         switch (httpResponse.statusCode) {
             case HttpStatusCode.ok: return httpResponse.body!

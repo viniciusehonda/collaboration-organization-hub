@@ -74,7 +74,7 @@ const CustomerCreate: React.FC<Props> = ({ saveCustomer, validation }: Props) =>
 
             saveCustomer.add(fields)
                 .then((customer: SaveCustomer.Model) => {
-                    navigate('/customer');
+                    navigate('/customer', { state: customer });
                 })
                 .catch((error) => {
                     if (error && error.message) {

@@ -36,7 +36,7 @@ export class RemoteSaveCustomer implements SaveCustomer {
 
     async edit (model: RemoteSaveCustomer.Model): Promise<RemoteSaveCustomer.Model> {
         const httpResponse = await this.httpClient.request({
-            url: this.editUrl,
+            url: this.editUrl + '/' + model._id,
             headers: {
                 'x-access-token': this.getToken()
             },

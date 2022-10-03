@@ -92,7 +92,7 @@ const CustomerUpdate: React.FC<Props> = ({ saveCustomer, getCustomer, validation
 
             saveCustomer.edit(fields)
                 .then((customer: SaveCustomer.Model) => {
-                    navigate('/customer');
+                    navigate('/customer', { state: customer });
                 })
                 .catch((error) => {
                     if (error && error.message) {

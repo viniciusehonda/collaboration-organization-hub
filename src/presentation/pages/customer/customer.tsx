@@ -5,14 +5,17 @@ import { DeleteCustomer } from "../../../domain/usecases/customer/delete-custome
 
 import React, { useEffect } from 'react'
 import { Customer as model } from "../../../domain/models/customer"
-import { Box, SpeedDial, SpeedDialAction, SpeedDialIcon, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { Box, Fab, SpeedDial, SpeedDialAction, SpeedDialIcon, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import { Validation } from "@/presentation/protocols/validation"
 import Paper from '@mui/material/Paper';
 import AddIcon from '@mui/icons-material/Add';
-import { useNavigate, useOutlet } from 'react-router-dom'
+import { useLocation, useNavigate, useOutlet } from 'react-router-dom'
 import { Outlet } from "react-router-dom"
 import PageTitle from '@/presentation/components/pageTitle/page-title'
+import { current } from '@reduxjs/toolkit'
+import DeleteButton from '@/presentation/components/buttons/deleteButton'
+import EditButton from '@/presentation/components/buttons/editButton'
 
 type Props = {
   validation: Validation,
@@ -21,10 +24,11 @@ type Props = {
   deleteCustomer: DeleteCustomer
 }
 
-const Customer: React.FC<Props> = ({ loadCustomerList }: Props) => {
+const Customer: React.FC<Props> = ({ loadCustomerList, deleteCustomer }: Props) => {
 
   const navigate = useNavigate();
   const outlet = useOutlet();
+  const location = useLocation();
   const [customers, setCustomers] = React.useState<LoadCustomerList.Model[]>(new Array<LoadCustomerList.Model>());
 
   useEffect(() => {
@@ -33,8 +37,46 @@ const Customer: React.FC<Props> = ({ loadCustomerList }: Props) => {
       .then(resultCustomers => setCustomers(resultCustomers));
   }, [])
 
+
+  useEffect(() => {
+
+    if (location != undefined && location.state) {
+      var newCustomer = location.state as LoadCustomerList.Model
+
+      if (newCustomer) {
+        if (customers.find(s => s._id == newCustomer._id)) {
+          setCustomers(prev => prev.map(o => o._id != newCustomer._id ? o : newCustomer));
+        }
+        else {
+          setCustomers(prev => [...prev, newCustomer])
+        }
+      }
+    }
+  }, [location])
+
+
+
   function updateItem(id: string) {
     navigate('update/' + id)
+  }
+
+  function deleteItem(id: string) {
+    try {
+      deleteCustomer.delete(id).then(() => {
+        loadCustomerList
+          .loadAll()
+          .then(resultCustomers => setCustomers(resultCustomers));
+      })
+        .finally(() => {
+
+        })
+        .catch(() => {
+
+        })
+    }
+    catch (error: any) {
+
+    }
   }
 
   const getTable = () => {
@@ -46,7 +88,7 @@ const Customer: React.FC<Props> = ({ loadCustomerList }: Props) => {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Description</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell width={'20%'}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -62,8 +104,8 @@ const Customer: React.FC<Props> = ({ loadCustomerList }: Props) => {
                   {row.description}
                 </TableCell>
                 <TableCell component='th' scope='row'>
-                  <button onClick={() => updateItem(row._id)}>Edit</button>
-                  <button>Delete</button>
+                  <EditButton onClick={() => updateItem(row._id)}>Edit</EditButton>
+                  <DeleteButton onClick={() => deleteItem(row._id)}>Delete</DeleteButton>
                 </TableCell>
               </TableRow>
             ))}
