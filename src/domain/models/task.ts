@@ -1,11 +1,24 @@
-export type Task = {
-    id: number,
-    name: string,
+export type TaskModel = {
+    _id: string,
+    title: string,
     description: string,
-    time: number | null,
-    plannedTime: number,
-    userId: number | null,
-    projectId: number,
-    sprintId: number | null,
-    milestoneId: number | null
+    expectedTime: number,
+    realTime: number,
+    creation: Date,
+    deadline: Date | null,
+    creator: string
+}
+
+export type TaskParam = {
+    title: string,
+    description: string,
+    expectedTime: number,
+    creation: Date,
+    deadline: Date | null,
+    creator: string
+}
+
+export namespace Task {
+    export type Model = TaskModel;
+    export type Params = TaskParam
 }
