@@ -1,18 +1,13 @@
 @import "../../styles/colors.scss";
+@import "./common-button-styles.scss";
 
-.deleteButton {
+.dangerButton {
     background-color: $invalid;
-    border-radius: 5px;
     border: 1px solid $white;
     color: $white;
-    height: 45px;
-    width: 85px;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
 }
 
-.deleteButton:hover {
+.dangerButton:hover {
     cursor: pointer;
     transform: scale(1.01);
     background-color: $identityDarkOpacity;

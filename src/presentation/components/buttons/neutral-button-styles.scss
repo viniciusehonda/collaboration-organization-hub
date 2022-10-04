@@ -1,0 +1,14 @@
+@import "../../styles/colors.scss";
+@import "./common-button-styles.scss";
+
+.neutralButton {
+    background-color: $white;
+    border: 1px solid $identityDark;
+    color: $identityDark;
+}
+
+.neutralButton:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+    background-color: $identityDarkOpacity;
+}

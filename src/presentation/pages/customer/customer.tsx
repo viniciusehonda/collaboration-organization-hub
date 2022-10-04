@@ -3,9 +3,9 @@ import { LoadCustomerList } from "../../../domain/usecases/customer/load-custome
 import { SaveCustomer } from "../../../domain/usecases/customer/save-customer"
 import { DeleteCustomer } from "../../../domain/usecases/customer/delete-customer"
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Customer as model } from "../../../domain/models/customer"
-import { Box, Fab, SpeedDial, SpeedDialAction, SpeedDialIcon, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Fab, SpeedDial, SpeedDialAction, SpeedDialIcon, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import { Validation } from "@/presentation/protocols/validation"
 import Paper from '@mui/material/Paper';
@@ -14,8 +14,11 @@ import { useLocation, useNavigate, useOutlet } from 'react-router-dom'
 import { Outlet } from "react-router-dom"
 import PageTitle from '@/presentation/components/pageTitle/page-title'
 import { current } from '@reduxjs/toolkit'
-import DeleteButton from '@/presentation/components/buttons/deleteButton'
-import EditButton from '@/presentation/components/buttons/editButton'
+import DeleteButton from '@/presentation/components/buttons/dangerButton'
+import EditButton from '@/presentation/components/buttons/lightButton'
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import NeutralButton from '@/presentation/components/buttons/neutralButton'
 
 type Props = {
   validation: Validation,
@@ -29,7 +32,9 @@ const Customer: React.FC<Props> = ({ loadCustomerList, deleteCustomer }: Props) 
   const navigate = useNavigate();
   const outlet = useOutlet();
   const location = useLocation();
+  const [deleteConfirmation, setDeleteConfirmation] = React.useState<boolean>(false);
   const [customers, setCustomers] = React.useState<LoadCustomerList.Model[]>(new Array<LoadCustomerList.Model>());
+  const customerToBeDeleted = useRef<LoadCustomerList.Model | null>(null);
 
   useEffect(() => {
     loadCustomerList
@@ -60,23 +65,35 @@ const Customer: React.FC<Props> = ({ loadCustomerList, deleteCustomer }: Props) 
     navigate('update/' + id)
   }
 
-  function deleteItem(id: string) {
+  function deleteItem() {
     try {
-      deleteCustomer.delete(id).then(() => {
-        loadCustomerList
-          .loadAll()
-          .then(resultCustomers => setCustomers(resultCustomers));
-      })
-        .finally(() => {
-
+      if (customerToBeDeleted.current) {
+        deleteCustomer.delete(customerToBeDeleted.current?._id).then(() => {
+          loadCustomerList
+            .loadAll()
+            .then(resultCustomers => setCustomers(resultCustomers));
         })
-        .catch(() => {
+          .finally(() => {
+            cancelDelete();
+          })
+          .catch(() => {
 
-        })
+          })
+      }
     }
     catch (error: any) {
 
     }
+  }
+
+  const openDeleteConfirmation = (item: DeleteCustomer.Model) => {
+    customerToBeDeleted.current = item;
+    setDeleteConfirmation(true);
+  }
+
+  const cancelDelete = () => {
+    customerToBeDeleted.current = null;
+    setDeleteConfirmation(false);
   }
 
   const getTable = () => {
@@ -104,8 +121,8 @@ const Customer: React.FC<Props> = ({ loadCustomerList, deleteCustomer }: Props) 
                   {row.description}
                 </TableCell>
                 <TableCell component='th' scope='row'>
-                  <EditButton onClick={() => updateItem(row._id)}>Edit</EditButton>
-                  <DeleteButton onClick={() => deleteItem(row._id)}>Delete</DeleteButton>
+                  <EditButton onClick={() => updateItem(row._id)}><EditIcon /> Edit</EditButton>
+                  <DeleteButton onClick={() => openDeleteConfirmation(row)}><DeleteForeverIcon /> Delete</DeleteButton>
                 </TableCell>
               </TableRow>
             ))}
@@ -121,8 +138,8 @@ const Customer: React.FC<Props> = ({ loadCustomerList, deleteCustomer }: Props) 
       <div className={Styles.optionsWrap}>
         <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
           <SpeedDial
-            ariaLabel="SpeedDial basic example"
-            sx={{ position: 'absolute', bottom: 16, right: 16 }}
+            ariaLabel="customer options"
+            sx={{ position: 'absolute', bottom: 16, right: 4 }}
             icon={<SpeedDialIcon />}
           >
             <SpeedDialAction
@@ -133,6 +150,27 @@ const Customer: React.FC<Props> = ({ loadCustomerList, deleteCustomer }: Props) 
             />
           </SpeedDial>
         </Box>
+      </div>
+      <div>
+        <Dialog
+          open={deleteConfirmation}
+          onClose={cancelDelete}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Are you sure you want to delete this customer ?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              This customer will be deleted forever.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <NeutralButton onClick={cancelDelete}>Cancelar</NeutralButton>
+            <DeleteButton onClick={() => deleteItem()}>Delete</DeleteButton>
+          </DialogActions>
+        </Dialog>
       </div>
       {getTable()}
     </div> : outlet}
